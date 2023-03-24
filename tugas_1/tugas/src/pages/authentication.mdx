@@ -1,0 +1,78 @@
+export const description =
+  'In this guide, we’ll look at how authentication works. Protocol offers two ways to authenticate your API requests: Basic authentication and OAuth2 with a token.'
+
+# Authentication
+
+You'll need to authenticate your requests to access any of the endpoints in the Protocol API. In this guide, we'll look at how authentication works. Protocol offers two ways to authenticate your API requests: Basic authentication and OAuth2 with a token — OAuth2 is the recommended way. {{ className: 'lead' }}
+
+## Local authentication
+
+the endpoint allows you to signin using username and password get access token.
+
+<Row>
+
+  <Col>
+
+    <Properties>
+      <Property name="username" type="string">
+        the username for the user.
+      </Property>
+      <Property name="password" type="string">
+        the password for the user.
+      </Property>
+    </Properties>
+
+  </Col>
+  
+  <Col>
+    <CodeGroup title="Request"  tag="GET" label="/v1/signin"   >
+      ```js {{ title: 'Request' }}
+        const response = axios.get('/v1/signin' {
+          email:"johndoe@mail.com",
+          password:"12345678"
+        })
+      ```
+    </CodeGroup>
+
+    ```json {{ title: 'response' }}
+    {
+      "accessToken":"eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9",
+      "user": {
+        "username":"johndoe",
+        "email":"johndoe@gmail.com",
+        "lastName":"john",
+        "firstName":"doe"
+      }
+    }
+    ```
+
+  </Col>
+</Row>
+
+Please don't commit your Protocol password to GitHub!
+
+## Bearer token
+
+<Row>
+
+  <Col>
+workshop API using interceptor to inject access token.
+
+  </Col>
+  
+  <Col>
+    <CodeGroup title="Example"  tag="GET" label="/v1/resource"   >
+      ```js {{ title: 'Resource' }}
+        const response = axios.get('/v1/resource' {
+          ...
+        },{
+          header:{
+            Authorization: 'Bearer <accessToken>'
+          }
+        }
+        )
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>

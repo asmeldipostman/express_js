@@ -1,0 +1,540 @@
+export const description =
+  'On this page, we’ll dive into the different user endpoints you can use to manage users programmatically.'
+
+# User Story
+
+it is an API for each user story, which allows the client to register users by phone number, Chat, Group Chat, Image Upload, Delete chat for me, Delete chat for all
+
+## The user model
+
+The user model contains all the information about your users, such as their username, avatar, and phone number. It also contains a reference to the conversation between you and the user and information about when they were last active on Protocol.
+
+### Properties
+
+<Properties>
+  <Property name="_id" type="string">
+    Unique identifier for the user.
+  </Property>
+  <Property name="username" type="string">
+    The username for the user.
+  </Property>
+  <Property name="phone" type="string">
+    The phone for the user.
+  </Property>
+  <Property name="phoneVerificationCode" type="string">
+    The phone verification code for the user.
+  </Property>
+  <Property name="isphoneVerified" type="boolean">
+    The is phone verified status for the user.
+  </Property>
+  <Property name="codeVerification" type="string">
+    The codeVerification for the user.
+  </Property>
+</Properties>
+
+---
+
+## Registration Phone Number {{ tag: 'POST', label: '/v1/users/invitePhoneNumber' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to add a new user to your user list in Protocol. To add a user, you must provide their Protocol username and phone number.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="email" type="string">
+        The email for the user.
+      </Property>
+
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/users/invitePhoneNumber">
+
+      ```typescript {{ title: 'axios' }}
+
+        const response = axios.post('/v1/users/invitePhoneNumber', {
+            email: 'johndoe@mail.com',
+        })
+
+      ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '201' }}
+      {
+        "_id": "WAz8eIbvDR60rouK",
+        "codeVerification": "679465"
+      }
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Show Contact Number {{ tag: 'GET', label: '/v1/users/showContactNumber/idUser' }}
+
+<Row>
+  <Col>
+
+    the contact number will appear if the authorization process is complete
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/users/showContactNumber/idUser">
+
+      ```typescript {{ title: 'axios' }}
+
+        const response = axios.get('/v1/users/showContactNumber/WAz8eIbvDR60rouK')
+
+      ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '201' }}
+      {
+       "users": [
+          {
+            "_id": "WAz8eIbvDR60rouK",
+            "username": "johndoe",
+            "email": "johndoe@gmail.com",
+            "phone_number": "+62081255556666",
+          },
+          {...},
+          {...},
+          {...}
+          // 30 items
+        ],
+      }
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Show All Chat {{ tag: 'GET', label: '/v1/users/showPersonalChat/idUser' }}
+
+<Row>
+  <Col>
+
+    show all messages based on user id data
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/users/showPersonalChat/idUser">
+
+      ```typescript {{ title: 'axios' }}
+
+        const response = axios.get('/v1/users/showPersonalChat/WAz8eIbvDR60rouK')
+
+      ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '201' }}
+      {
+       "show_all_chat": [
+          {
+            "_id": "fgdDEHnejdwedu",
+            "username": "johndoe",
+            "chat": "hallo",
+          },
+          {...},
+          {...},
+          {...}
+          // 30 items
+        ],
+      }
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Show All Group Chat {{ tag: 'GET', label: '/v1/users/showGroupChat/idUser' }}
+
+<Row>
+  <Col>
+
+    show all Chat Group based on user id data
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/users/showGroupChat/id">
+
+      ```typescript {{ title: 'axios' }}
+
+        const response = axios.get('/v1/users/showGroupChat/WAz8eIbvDR60rouK')
+
+      ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '200' }}
+      {
+       "show_group_chat": [
+          {
+            "_id": "fgdDEHnejdwedu",
+            "username": "johndoe",
+            "chat": "hallo",
+          },
+          {...},
+          {...},
+          {...}
+          // 30 items
+        ],
+      }
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Show Page Chat {{ tag: 'Get', label: '/v1/users/showPageChat/idUser' }}
+
+<Row>
+  <Col>
+
+    displays chat data based on client activity after clicking the chat icon personally
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/users/showPageChat/idUser">
+
+      ```typescript {{ title: 'axios' }}
+
+        const response = axios.get('/v1/users/showPageChat/WAz8eIbvDR60rouK')
+
+      ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '200' }}
+      {
+        "_id": "WAz8eIbvDR60rouK",
+        "codeVerification": "679465",
+        "chat": "hallo"
+      }
+      {...},
+      {...},
+      {...}
+      // 30 items
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Show Page Group Chat {{ tag: 'Get', label: '/v1/users/showPageGroupChat/idUser' }}
+
+<Row>
+  <Col>
+
+    displays chat data based on client activity after clicking the chat icon Group Chat
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/users/showPageGroupChat/idUser">
+
+      ```typescript {{ title: 'axios' }}
+
+        const response = axios.get('/v1/users/showPageGroupChat/WAz8eIbvDR60rouK')
+
+      ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '200' }}
+      {
+        group : [
+          {
+            "_id": "WAz8eIbvDR60rouK",
+            "codeVerification": "679465",
+            "chat": "hallo"
+          }
+          {...},
+          {...},
+          {...}
+          // 30 items
+        ]
+      }
+
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Create New Page Chat {{ tag: 'Post', label: '/v1/users/createNewPageChat/idUser' }}
+
+<Row>
+  <Col>
+
+    create a new chat.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="chat" type="string">
+        The chat for the user.
+      </Property>
+    </Properties>
+
+    ### Optional attributes
+
+    <Properties>
+
+      <Property name="Image" type="string">
+        The Image for the user.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/users/createNewPageChat/idUser">
+
+      ```typescript {{ title: 'axios' }}
+
+        const response = axios.post('/v1/users/createNewPageChat/WAz8eIbvDR60rouK',{
+          chat: 'hallo world!!',
+          image: 'data.jpg',
+        })
+
+      ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '201' }}
+      {
+        "_id_chat": "WAz8eIbvDR60rouK",
+      }
+
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Reply Page Chat {{ tag: 'Put', label: '/v1/users/replyPageChat/idUser' }}
+
+<Row>
+  <Col>
+
+    Reply a new chat.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="chat" type="string">
+        The chat for the user.
+      </Property>
+    </Properties>
+
+    ### Optional attributes
+
+    <Properties>
+
+      <Property name="Image" type="string">
+        The Image for the user.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="PUT" label="/v1/users/replyPageChat/idUser">
+
+      ```typescript {{ title: 'axios' }}
+
+        const response = axios.put('/v1/users/replyPageChat/WAz8eIbvDR60rouK',{
+          chat: 'hallo world!!',
+          image: 'data.jpg'
+        })
+
+      ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '201' }}
+      {
+        "_id_chat": "WAz8eIbvDR60rouK",
+      }
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Create New Page Group Chat {{ tag: 'Post', label: '/v1/users/createNewPageGroupChat/idGroupChat' }}
+
+<Row>
+  <Col>
+
+    create a new Group chat.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="chat" type="string">
+        The chat for the user.
+      </Property>
+    </Properties>
+
+    ### Optional attributes
+
+    <Properties>
+
+      <Property name="Image" type="string">
+        The Image for the user.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/users/createNewPageGroupChat/idGroupChat">
+
+      ```typescript {{ title: 'axios' }}
+
+        const response = axios.post('/v1/users/createNewPageGroupChat/fdsfsfdfdfsfsf',{
+          chat: 'hallo world!!',
+          image: 'data.jpg',
+        })
+
+      ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '201' }}
+      {
+        "_id_chat": "WAz8eIbvDR60rouK",
+      }
+
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Reply Page Group Chat {{ tag: 'Put', label: '/v1/users/replyGroupPageChat/idGroupChat' }}
+
+<Row>
+  <Col>
+
+    Reply a new Group chat.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="chat" type="string">
+        The chat for the user.
+      </Property>
+    </Properties>
+
+    ### Optional attributes
+
+    <Properties>
+
+      <Property name="Image" type="string">
+        The Image for the user.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="PUT" label="/v1/users/replyGroupPageChat/idGroupChat">
+
+      ```typescript {{ title: 'axios' }}
+
+        const response = axios.put('/v1/users/replyGroupPageChat/fdsfsfdfdfsfsf',{
+          chat: 'hallo world!!',
+          image: 'data.jpg'
+        })
+
+      ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '201' }}
+      {
+        "_id_chat": "WAz8eIbvDR60rouK",
+      }
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Delete a user {{ tag: 'DELETE', label: '/v1/users/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to delete users from your user list in Protocol. Note: This will also delete your conversation with the given user.
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="DELETE" label="/v1/users/deleteUser/WAz8eIbvDR60rouK">
+
+    ```typescript {{ title: 'axios' }}
+
+      const response = axios.delete('/v1/users/deleteUser/WAz8eIbvDR60rouK')
+
+    ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '204' }}
+      {
+        "_id": "WAz8eIbvDR60rouK",
+        "status": "No Contend",
+        "message": "successfully delete user data",
+      }
+      ```
+
+    </CodeGroup>
+
+  </Col>
+</Row>

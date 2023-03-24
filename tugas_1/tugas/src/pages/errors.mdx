@@ -1,0 +1,138 @@
+export const description =
+  'In this guide, we will talk about what happens when something goes wrong while you work with the API.'
+
+# Errors
+
+In this guide, we will talk about what happens when something goes wrong while you work with the API. Mistakes happen, and mostly they will be yours, not ours. Let's look at some status codes and error types you might encounter. {{ className: 'lead' }}
+
+<Note>
+  Before reaching out to support with an error, please be aware that 99% of all
+  reported errors are, in fact, user errors. Therefore, please carefully check
+  your code before contacting Protocol support.
+</Note>
+
+---
+
+## Status codes
+
+Here is a list of the different categories of status codes returned by the Protocol API. Use these to understand if a request was successful.
+
+---
+
+<Row>
+  <Col>
+    <Properties>
+      <Property name="200 - OK">Everything worked as expected.</Property>
+      <Property name="201 - Created">
+        a successfull response of Create requests.
+      </Property>
+      <Property name="204 - No Contend">
+        a successfull response of UPDATE or DELETE request.
+      </Property>
+       <Property name="400 - Bad Request">
+        the request was unacceptable, often due to missing a request parameter.
+      </Property>
+      <Property name="401 - Unauthorized">
+       username or password or bearer-token invalid.
+      </Property>
+      <Property name="403 - Forbidden">
+        the API key doesn't have permissions to perform the request.
+      </Property>
+      <Property name="404 - Not Found">
+        the requested resource doesn't exist.
+      </Property>
+      <Property name="422 - Unprocessable Untity">
+        validation fails.
+      </Property>
+      <Property name="429 - Too Many Request">
+        hit the API too quickly, we recommend an exponential backoff of your requests.
+      </Property>
+        <Property name="500 - Internal Server Error">
+        something went wrong on Server.
+      </Property>
+    </Properties>
+
+  </Col>
+  <CodeGroup title="Error Response">
+
+    ```bash {{ title: "200" }}
+    {
+      "code": "200",
+      "status": "OK",
+      "message": "Authentication credential is invalid",
+    }
+    ```
+    ```bash {{ title: "201" }}
+    {
+      "code": "201",
+      "status": "Created",
+      "message": "Authentication credential is invalid",
+    }
+    ```
+    ```bash {{ title: "204" }}
+    {
+      "code": "204",
+      "status": "No Contend",
+      "message": "Authentication credential is invalid",
+    }
+    ```
+    ```bash {{ title: "400" }}
+    {
+      "code": "400",
+      "status": "Bad Request",
+      "message": "Authentication credential is invalid",
+    }
+    ```
+    ```bash {{ title: "401" }}
+    {
+      "code": "401",
+      "status": "Unauthorized",
+      "message": "Authentication credential is invalid",
+    }
+    ```
+    ```bash {{ title: "403" }}
+    {
+      "code": "403",
+      "status": "Forbidden",
+      "message": "Authentication credential is invalid",
+    }
+    ```
+    ```bash {{ title: "404" }}
+    {
+      "code": "404",
+      "status": "Not Found",
+      "message": "Authentication credential is invalid",
+    }
+    ```
+    ```bash {{ title: "422" }}
+    {
+      "code": "422",
+      "status": "Unprocessable Untity",
+      "message": "the requests was well-formed but was unable to",
+      "errors": {
+        "username":[
+          "the username field is required"
+        ],
+        "password":[
+          "the password field is required"
+        ],
+      }
+    }
+    ```
+    ```bash {{ title: "429" }}
+    {
+      "code": "429",
+      "status": "Too Many Request",
+      "message": "Authentication credential is invalid",
+    }
+    ```
+    ```bash {{ title: "500" }}
+    {
+      "code": "500",
+      "status": "Internal Server Error",
+      "message": "Authentication credential is invalid",
+    }
+    ```
+
+  </CodeGroup>
+</Row>

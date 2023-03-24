@@ -1,0 +1,279 @@
+export const description =
+  'On this page, we’ll dive into the different user endpoints you can use to manage users programmatically.'
+
+# User
+
+As the name suggests, users are a core part of Protocol — the very reason Protocol exists is so you can have secure conversations with your users. On this page, we'll dive into the different user endpoints you can use to manage users programmatically. We'll look at how to query, create, update, and delete users. {{ className: 'lead' }}
+
+## The user model
+
+The user model contains all the information about your users, such as their username, avatar, and phone number. It also contains a reference to the conversation between you and the user and information about when they were last active on Protocol.
+
+### Properties
+
+<Properties>
+  <Property name="_id" type="string">
+    Unique identifier for the user.
+  </Property>
+  <Property name="username" type="string">
+    The username for the user.
+  </Property>
+  <Property name="email" type="string">
+    The email for the user.
+  </Property>
+  <Property name="emailVerificationCode" type="string">
+    The email verification code for the user.
+  </Property>
+  <Property name="isEmailVerified" type="boolean">
+    The is email verified status for the user.
+  </Property>
+  <Property name="password" type="string">
+    The password for the user.
+  </Property>
+  <Property name="role_id" type="string">
+    The role id for the user.
+  </Property>
+  <Property name="phone_number" type="string">
+    The phone number for the user.
+  </Property>
+</Properties>
+
+---
+
+## List all users {{ tag: 'GET', label: '/v1/users' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a paginated list of all your users. By default, a maximum of ten users are shown per page.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="limit" type="integer">
+        Limit the number of users returned.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/users">
+
+    ```typescript {{ title: 'axios' }}
+      const response = axios.get('/v1/users')
+    ```
+
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '200' }}
+      {
+        "users": [
+          {
+            "_id": "WAz8eIbvDR60rouK",
+            "username": "johndoe",
+            "email": "johndoe@gmail.com",
+            "phone_number": "+62081255556666",
+            "password": "9uQFF1LhasdaeFF1Lh",
+          },
+          {...},
+          {...},
+          {...}
+          // 30 items
+        ],
+      }
+      ```
+
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Invite User {{ tag: 'POST', label: '/v1/users/invite' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to add a new user to your user list in Protocol. To add a user, you must provide their Protocol username and phone number.
+
+    ### Required attributes
+
+    <Properties>
+      <Property name="email" type="string">
+        The email for the user.
+      </Property>
+
+    </Properties>
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="POST" label="/v1/users/invite">
+
+      ```typescript {{ title: 'axios' }}
+
+        const response = axios.post('/v1/users/invite', {
+            email: 'johndoe@mail.com',
+        })
+
+      ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '201' }}
+      {
+        "_id": "WAz8eIbvDR60rouK"
+      }
+      ```
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Retrieve a user {{ tag: 'GET', label: '/v1/users/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to retrieve a user by providing their Protocol id. Refer to [the list](#the-user-model) at the top of this page to see which properties are included with user objects.
+
+  </Col>
+  <Col sticky>
+
+    <CodeGroup title="Request" tag="GET" label="/v1/users/WAz8eIbvDR60rouK">
+
+    ```bash {{ title: 'cURL' }}
+    curl https://api.protocol.chat/v1/users/WAz8eIbvDR60rouK \
+      -H "Authorization: Bearer {token}"
+    ```
+
+    ```js
+    import ApiClient from '@example/protocol-api'
+
+    const client = new ApiClient(token)
+
+    await client.users.get('WAz8eIbvDR60rouK')
+    ```
+
+    ```python
+    from protocol_api import ApiClient
+
+    client = ApiClient(token)
+
+    client.users.get("WAz8eIbvDR60rouK")
+    ```
+
+    ```php
+    $client = new \Protocol\ApiClient($token);
+
+    $client->users->get('WAz8eIbvDR60rouK');
+    ```
+
+    </CodeGroup>
+
+    ```json {{ title: 'Response' }}
+    {
+      "id": "WAz8eIbvDR60rouK",
+      "username": "FrankMcCallister",
+      "phone_number": "1-800-759-3000",
+      "avatar_url": "https://assets.protocol.chat/avatars/frank.jpg",
+      "display_name": null,
+      "conversation_id": "xgQQXg3hrtjh7AvZ",
+      "last_active_at": 705103200,
+      "created_at": 692233200
+    }
+    ```
+
+  </Col>
+</Row>
+
+---
+
+## Update a user {{ tag: 'PUT', label: '/v1/users/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to perform an update on a user. Currently, the only attribute that can be updated on users is the `display_name` attribute which controls how a user appears in your user list in Protocol.
+
+    ### Optional attributes
+
+    <Properties>
+      <Property name="username" type="string">
+        The user display name in the user list. By default, this is just the username.
+      </Property>
+      <Property name="phone_number" type="string">
+        The user display name in the user list. By default, this is just the username.
+      </Property>
+    </Properties>
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="PUT" label="/v1/users/updateUser/WAz8eIbvDR60rouK">
+
+    ```typescript {{ title: 'axios' }}
+
+      const response = axios.put('/v1/users/updateUser/WAz8eIbvDR60rouK', {
+          username: 'jack',
+          phone_number: '+6281234123412',
+      })
+
+    ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '204' }}
+      {
+        "_id": "WAz8eIbvDR60rouK",
+        "status": "No Contend",
+        "message": "successfully update user data",
+      }
+      ```
+
+    </CodeGroup>
+
+  </Col>
+</Row>
+
+---
+
+## Delete a user {{ tag: 'DELETE', label: '/v1/users/:id' }}
+
+<Row>
+  <Col>
+
+    This endpoint allows you to delete users from your user list in Protocol. Note: This will also delete your conversation with the given user.
+
+  </Col>
+  <Col sticky>
+    <CodeGroup title="Request" tag="DELETE" label="/v1/users/deleteUser/WAz8eIbvDR60rouK">
+
+    ```typescript {{ title: 'axios' }}
+
+      const response = axios.delete('/v1/users/deleteUser/WAz8eIbvDR60rouK')
+
+    ````
+
+    </CodeGroup>
+
+    <CodeGroup title="Response">
+      ```json {{ title: '204' }}
+      {
+        "_id": "WAz8eIbvDR60rouK",
+        "status": "No Contend",
+        "message": "successfully delete user data",
+      }
+      ```
+
+    </CodeGroup>
+
+  </Col>
+</Row>
